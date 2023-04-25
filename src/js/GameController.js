@@ -2,7 +2,7 @@ import themes from './themes';
 import Team from './Team';
 import { generateTeam } from './generators';
 import PositionedCharacter from './PositionedCharacter';
-import Icon from './characters/Icon';
+import propIcons from './characters/Icon';
 import GamePlay from './GamePlay';
 import GameState from './GameState';
 import cursors from './cursors';
@@ -385,7 +385,7 @@ export default class GameController {
     if (!this.blockedBoard) {
       for (const item of [...playerPositions, ...computerPositions]) {
         if (item.position === index) {
-          this.gamePlay.showCellTooltip(Icon(item.character), index);
+          this.gamePlay.showCellTooltip(propIcons(item.character), index);
         }
       }
 
