@@ -23,4 +23,12 @@ export default class Team {
   static getStartPlayerTeam() {
     return [new Bowman(1), new Swordsman(1)];
   }
+
+  static getPlayerTeam() {
+    return [Bowman, Swordsman, Magician];
+  }
+
+  static getComputerTeam() {
+    return [Daemon, Undead, Vampire];
+  }
 }
