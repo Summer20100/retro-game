@@ -4,6 +4,8 @@
   "description": "retro-game",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
     "test": "jest --coverage",
@@ -20,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/Summer20100/retro-game/issues"
   },
-  "homepage": "https://github.com/Summer20100/retro-game#readme",
+  "homepage": "https://github.com/Summer20100/retro-game",
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.2",
@@ -31,6 +33,7 @@
     "eslint": "^8.16.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "gh-pages": "^5.0.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^28.1.0",
