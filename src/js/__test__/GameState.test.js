@@ -1,5 +1,30 @@
-import GameState from '../gameState_test/GameState';
-import GameStateService from '../gameState_test/GameStateService';
+function GameState() {
+  return `{
+      "point":10,
+      "maxPoint":10,
+      "level":1,
+      "currentTheme":"prairie",
+      "userPositions":[]
+    }`;
+}
+
+class GameStateService {
+  constructor(storage) {
+    this.storage = storage;
+  }
+
+  save(state) {
+    this.storage.setItem('state', JSON.stringify(state));
+  }
+
+  static load() {
+    try {
+      return JSON.parse(GameState());
+    } catch (e) {
+      throw new Error('Game state is empty or was not read.');
+    }
+  }
+}
 
 jest.mock('../gameState_test/GameState');
 beforeEach(() => {

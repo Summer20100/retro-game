@@ -35,17 +35,13 @@ export default class GameController {
   init() {
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
-    this.events();
-    this.nextLevel();
-  }
-
-  events() {
     this.gamePlay.addNewGameListener(this.newGame.bind(this));
     this.gamePlay.addSaveGameListener(this.saveGame.bind(this));
     this.gamePlay.addLoadGameListener(this.loadGame.bind(this));
     this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this));
     this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this));
     this.gamePlay.addCellClickListener(this.onCellClick.bind(this));
+    this.nextLevel();
   }
 
   nextLevel() {
@@ -215,6 +211,7 @@ export default class GameController {
       if (loadGameState) {
         maxPoint = Math.max(loadGameState.maxPoint, this.point);
       }
+      if (maxPoint === 0) maxPoint = this.point;
     } catch (e) {
       maxPoint = this.point;
       console.log(e);
