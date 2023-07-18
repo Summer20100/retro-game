@@ -47,30 +47,30 @@ export default class GameController {
   nextLevel() {
     this.currentAction = 'player';
     if (this.level === 1) {
-      this.playerTeam = Team.getStartPlayerTeam();
-      this.compTeam = generateTeam(Team.getComputerTeam(), 1, 2);
-      GameController.addCharacterPosition(this.playerTeam, this.compTeam);
+      this.playerTeam = generateTeam(Team.getPlayerTeam(), this.level, 2);
+      this.compTeam = generateTeam(Team.getComputerTeam(), this.level, 2);
+      this.addCharacterPosition(this.playerTeam, this.compTeam);
     } else if (this.level === 2) {
       this.currentTheme = themes.desert;
-      this.playerTeam = generateTeam(Team.getPlayerTeam(), 1, 1);
-      this.compTeam = generateTeam(Team.getComputerTeam(), 2, (this.playerTeam.length + playerPositions.length));
-      GameController.addCharacterPosition(this.playerTeam, this.compTeam);
+      this.playerTeam = generateTeam(Team.getPlayerTeam(), this.level - 1, 2);
+      this.compTeam = generateTeam(Team.getComputerTeam(), this.level, (this.playerTeam.length + playerPositions.length));
+      this.addCharacterPosition(this.playerTeam, this.compTeam);
     } else if (this.level === 3) {
       this.currentTheme = themes.arctic;
-      this.playerTeam = generateTeam(Team.getPlayerTeam(), 2, 2);
-      this.compTeam = generateTeam(Team.getComputerTeam(), 3, (this.playerTeam.length + playerPositions.length));
-      GameController.addCharacterPosition(this.playerTeam, this.compTeam);
+      this.playerTeam = generateTeam(Team.getPlayerTeam(), this.level - 1, 2);
+      this.compTeam = generateTeam(Team.getComputerTeam(), this.level, (this.playerTeam.length + playerPositions.length));
+      this.addCharacterPosition(this.playerTeam, this.compTeam);
     } else if (this.level === 4) {
       this.currentTheme = themes.mountain;
-      this.playerTeam = generateTeam(Team.getPlayerTeam(), 3, 2);
-      this.compTeam = generateTeam(Team.getComputerTeam(), 4, (this.playerTeam.length + playerPositions.length));
-      GameController.addCharacterPosition(this.playerTeam, this.compTeam);
+      this.playerTeam = generateTeam(Team.getPlayerTeam(), this.level - 1, 2);
+      this.compTeam = generateTeam(Team.getComputerTeam(), this.level, (this.playerTeam.length + playerPositions.length));
+      this.addCharacterPosition(this.playerTeam, this.compTeam);
     } else {
       this.blockedBoard = true;
       GamePlay.showMessage(`Your score ${this.point}. Best score: ${this.maxPoints()}.`);
       return;
     }
-    const characterPositions = GameController.getPositions(playerPositions.length);
+    const characterPositions = this.getPositions(playerPositions.length);
     for (let i = 0; i < playerPositions.length; i += 1) {
       playerPositions[i].position = characterPositions.player[i];
       computerPositions[i].position = characterPositions.computer[i];
@@ -134,7 +134,7 @@ export default class GameController {
     return row * 8 + column;
   }
 
-  static addCharacterPosition(playersTeam, computersTeam) {
+  addCharacterPosition(playersTeam, computersTeam) {
     for (let i = 0; i < playersTeam.length; i += 1) {
       playerPositions.push(new PositionedCharacter(playersTeam[i], 0));
     }
@@ -143,7 +143,7 @@ export default class GameController {
     }
   }
 
-  static getPositions(length) {
+  getPositions(length) {
     const position = { player: [], computer: [] };
     let random;
     const randomPosition = (column = 0) => (Math.floor(Math.random() * 8) * 8) + ((Math.floor(Math.random() * 2) + column));
@@ -160,7 +160,7 @@ export default class GameController {
     return position;
   }
 
-  static attackAndDefenceLevelUp(attackBefore, health) {
+  attackAndDefenceLevelUp(attackBefore, health) {
     return Math.floor(Math.max(attackBefore, attackBefore * (1.8 - health / 100)));
   }
 
@@ -227,8 +227,8 @@ export default class GameController {
       for (const item of playerPositions) {
         const current = item.character;
         current.level += 1;
-        current.attack = GameController.attackAndDefenceLevelUp(current.attack, current.health);
-        current.defence = GameController.attackAndDefenceLevelUp(current.defence, current.health);
+        current.attack = this.attackAndDefenceLevelUp(current.attack, current.health);
+        current.defence = this.attackAndDefenceLevelUp(current.defence, current.health);
         current.health = (current.health + 80) < 100 ? current.health + 80 : 100;
       }
     };

@@ -20,10 +20,6 @@ import Vampire from './characters/Vampire';
 
 export default class Team {
   // TODO: write your logic here
-  static getStartPlayerTeam() {
-    return [new Bowman(1), new Swordsman(1)];
-  }
-
   static getPlayerTeam() {
     return [Bowman, Swordsman, Magician];
   }
